@@ -21,6 +21,7 @@ jobs:
         shell: sh
         if: runner.os == 'Linux'
         run: |
+          cp ./dist/index.html ./dist/404.html
           tar \
             --directory "./dist/" \
             -cvf "$RUNNER_TEMP/artifact.tar" \

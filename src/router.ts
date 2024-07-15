@@ -3,8 +3,8 @@ import HomeView from "./views/HomeView.vue";
 import FakeQueryView from "./views/FakeQueryView.vue";
 
 const routes = [
-    { path: '/', component: HomeView },
-    { path: '/query/:params', component: FakeQueryView, props: true },
+    { path: '/rickroll-query/', component: HomeView },
+    { path: '/rickroll-query/query/:params', component: FakeQueryView, props: true },
 ]
 
 const router = createRouter({
