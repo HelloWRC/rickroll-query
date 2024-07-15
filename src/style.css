@@ -1,0 +1,16 @@
+.form-sheet {
+    @media screen and (min-width: 832px) {
+        width: 800px;
+        align-self: center;
+        margin-right: auto;
+        margin-left: auto;
+    }
+
+    padding: 16px;
+    width: 100%;
+    height: 100%;
+}
+
+* {
+    font-family:  "Roboto", "Inter", ui-sans-serif;
+}
