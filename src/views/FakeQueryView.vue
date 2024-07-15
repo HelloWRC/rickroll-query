@@ -14,18 +14,20 @@ const props = defineProps({
 let query:QueryInfo = {
   name: "",
   introduction: "",
-  systemTitle: ""
+  systemTitle: "",
+  link: ""
 }
 if (props.params != undefined) {
   query = DecodeQuery(props.params)
 }
 console.log(query)
+document.title = query.systemTitle
 today.value = (new Date()).toDateString();
 
 function onNavigated() {
   isLoading.value = true;
   if (isFirstError.value) {
-    window.location.assign("https://www.bilibili.com/video/BV1z34y1C7Kc/?p=1")
+    window.location.assign(query.link)
   } else {
     setTimeout(postOnNavigated, 2000)
   }

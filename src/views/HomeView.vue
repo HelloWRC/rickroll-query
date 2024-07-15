@@ -2,19 +2,36 @@
 import {ref} from "vue";
 import QueryInfo from "../models/QueryInfo.ts";
 import {EncodeQuery} from "../helpers/QueryInfoEncoder.ts";
+import Clipboard from "clipboard"
 
 const queryName = ref("XX学校期末测试");
 const introduction = ref("欢迎使用XX学校查询系统。")
 const systemTitle = ref("XX查询系统")
 const queryUrl = ref("")
 const isQueryCreated = ref(false)
+const link = ref("https://www.bilibili.com/video/BV1GJ411x7h7/")
+const isSnackbarOpen = ref(false)
+const snackbarText = ref("")
+
+const presetLinks = [
+    "https://www.bilibili.com/video/BV1GJ411x7h7/",
+    "http://360ab.cn/ys"
+]
+
+document.title = "整蛊查询创建工具"
+
+function showSnackbar(text: string) {
+  snackbarText.value = text
+  isSnackbarOpen.value = true
+}
 
 function createQuery() {
   console.log("正在创建查询……")
   const query: QueryInfo = {
     name: queryName.value,
     introduction: introduction.value,
-    systemTitle: systemTitle.value
+    systemTitle: systemTitle.value,
+    link: link.value
   }
   const base64 = EncodeQuery(query)
   console.log(base64)
@@ -27,16 +44,19 @@ function preview() {
 }
 
 function copyLink() {
-
+  Clipboard.copy(queryUrl.value)
+  showSnackbar("已复制。")
 }
-
 </script>
 
 <template>
   <VAppBar>
     <VAppBarTitle>
-      RickRollQuery
+      整蛊查询创建工具
     </VAppBarTitle>
+    <template v-slot:append>
+      <VBtn icon="mdi-github" href="https://github.com/HelloWRC/rickroll-query"/>
+    </template>
   </VAppBar>
   <VSheet class="form-sheet">
     <VAlert type="warning" icon="mdi-alert" title="警告" class="mb-4">
@@ -51,13 +71,16 @@ function copyLink() {
                     v-model="systemTitle"/>
         <VTextarea label="导语"
                    v-model="introduction"/>
+        <VCombobox label="跳转链接"
+                   :items="presetLinks"
+                   v-model="link"/>
         <VBtn variant="elevated" @click="createQuery"
               color="primary">
           创建假查询
         </VBtn>
 
       </VForm>
-      <div v-show="isQueryCreated" class="mt-4 mb-4">
+      <div v-show="isQueryCreated" class="mt-4 mb-4" id="url-actions">
         <div class="ga-4 d-flex flex-column gc-4">
           <VAlert type="success">创建成功！快复制下面的链接去整蛊你的朋友吧！</VAlert>
           <VTextField v-model="queryUrl"
@@ -70,6 +93,18 @@ function copyLink() {
       </div>
     </div>
   </VSheet>
+  <VSnackbar v-model="isSnackbarOpen">
+    {{ snackbarText }}
+    <template v-slot:actions>
+      <v-btn
+          color="blue"
+          variant="text"
+          @click="isSnackbarOpen = false"
+      >
+        确定
+      </v-btn>
+    </template>
+  </VSnackbar>
 </template>
 
 <style scoped>
