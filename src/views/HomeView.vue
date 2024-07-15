@@ -37,6 +37,12 @@ function createQuery() {
   console.log(base64)
   queryUrl.value = window.location + 'query/' + base64;
   isQueryCreated.value = true
+
+  setTimeout(() => {
+    const element = document.getElementById("url-actions")
+    element?.scrollIntoView(true)
+  }, 200)
+
 }
 
 function preview() {
