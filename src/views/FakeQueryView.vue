@@ -2,7 +2,6 @@
 import {DecodeQuery} from "../helpers/QueryInfoEncoder.ts";
 import QueryInfo from '../models/QueryInfo.ts';
 import {ref} from "vue";
-import {randomInt} from "node:crypto";
 
 const isErrorDialogOpen = ref(false);
 const isLoading = ref(false);
